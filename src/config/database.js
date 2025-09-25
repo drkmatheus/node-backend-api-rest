@@ -8,7 +8,7 @@ module.exports = {
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   define: {
-    timestamp: true,
+    timestamps: true,
     underscored: true,
     underscoredAll: true,
     createdAt: "created_at",
