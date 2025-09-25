@@ -1,0 +1,38 @@
+services:
+  mariadb:
+    image: mariadb:lts-ubi9
+    container_name: api_mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: api_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - api_network
+
+  adminer:
+    image: adminer:latest
+    container_name: api_adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+      ADMINER_DEFAULT: pepa-linha
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    networks:
+      - api_network
+
+networks:
+  api_network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local
