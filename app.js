@@ -6,7 +6,7 @@ import homeRoutes from "./src/routes/homeRoutes";
 import userRoutes from "./src/routes/userRoutes";
 import jwtRoutes from "./src/routes/jwtRoutes";
 import alunosRoutes from "./src/routes/alunoRoutes";
-
+import picRoute from "./src/routes/picRoute";
 class App {
   constructor() {
     this.app = express();
@@ -24,6 +24,7 @@ class App {
     this.app.use("/users/", userRoutes);
     this.app.use("/tokens/", jwtRoutes);
     this.app.use("/alunos/", alunosRoutes);
+    this.app.use("/pics/", picRoute);
   }
 }
 
