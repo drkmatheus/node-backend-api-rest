@@ -4,7 +4,8 @@ class UserController {
   async create(req, res) {
     try {
       const novoUser = await User.create(req.body);
-      return res.json(novoUser);
+      const { id, nome, email } = novoUser;
+      return res.json({ id, nome, email });
     } catch (e) {
       console.log(e);
       return res
@@ -15,10 +16,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const users = await User.findAll();
-      // Dá até pra saber quem é que tá fazendo o acesso.
-      console.log("User Id:", req.userId);
-      console.log("User Email:", req.userEmail);
+      const users = await User.findAll({ attributes: ["id", "nome", "email"] });
       return res.json(users);
     } catch (e) {
       console.log(e);
@@ -28,7 +26,8 @@ class UserController {
   async show(req, res) {
     try {
       const user = await User.findByPk(req.params.id);
-      return res.json(user);
+      const { id, nome, email } = user;
+      return res.json({ id, nome, email });
     } catch (e) {
       console.log(e);
       return res.json(null);
@@ -36,16 +35,14 @@ class UserController {
   }
   async update(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({ errors: ["ID não enviado"] });
-      }
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.json({ message: "Usuário não encontrado" });
       }
 
       const novo = await user.update(req.body);
-      return res.json(novo);
+      const { id, nome, email } = novo;
+      return res.json({ id, nome, email });
     } catch (e) {
       console.log(e);
       return res
@@ -55,10 +52,7 @@ class UserController {
   }
   async delete(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({ errors: ["ID não enviado"] });
-      }
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.json({ message: "Usuário não encontrado" });
       }
