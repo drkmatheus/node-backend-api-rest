@@ -16,6 +16,9 @@ class UserController {
   async index(req, res) {
     try {
       const users = await User.findAll();
+      // Dá até pra saber quem é que tá fazendo o acesso.
+      console.log("User Id:", req.userId);
+      console.log("User Email:", req.userEmail);
       return res.json(users);
     } catch (e) {
       console.log(e);
