@@ -1,16 +1,23 @@
 import multer from "multer";
 import multerConfig from "../config/multerConfig";
+import Pic from "../models/Pic";
 
 const upload = multer(multerConfig).single("pic");
 class PicController {
-  async save(req, res) {
-    return upload(req, res, (err) => {
+  save(req, res) {
+    return upload(req, res, async (err) => {
       if (err) {
         return res.status(400).json({
           errors: [err.code],
         });
       }
-      return res.json(req.file);
+
+      const { originalname, filename } = req.file;
+
+      const { aluno_id } = req.body;
+      const foto = await Pic.create({ originalname, filename, aluno_id });
+
+      return res.json(foto);
     });
   }
 }
