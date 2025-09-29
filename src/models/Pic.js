@@ -1,4 +1,5 @@
 import Sequelize, { Model } from "sequelize";
+import appConfig from "../config/appConfig";
 export default class Pic extends Model {
   static init(sequelize) {
     super.init(
@@ -19,6 +20,12 @@ export default class Pic extends Model {
             notEmpty: {
               msg: "filename de tamanho inválido",
             },
+          },
+        },
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `${appConfig.url}/images/${this.getDataValue("filename")}`;
           },
         },
       },

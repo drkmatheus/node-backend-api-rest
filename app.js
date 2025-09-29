@@ -7,6 +7,7 @@ import userRoutes from "./src/routes/userRoutes";
 import jwtRoutes from "./src/routes/jwtRoutes";
 import alunosRoutes from "./src/routes/alunoRoutes";
 import picRoute from "./src/routes/picRoute";
+import { resolve } from "path";
 class App {
   constructor() {
     this.app = express();
@@ -17,6 +18,7 @@ class App {
   middlewares() {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(express.static(resolve(__dirname, "uploads")));
   }
 
   routes() {
