@@ -12,12 +12,19 @@ class PicController {
         });
       }
 
-      const { originalname, filename } = req.file;
+      try {
+        const { originalname, filename } = req.file;
 
-      const { aluno_id } = req.body;
-      const foto = await Pic.create({ originalname, filename, aluno_id });
+        const { aluno_id } = req.body;
+        const foto = await Pic.create({ originalname, filename, aluno_id });
 
-      return res.json(foto);
+        return res.json(foto);
+      } catch (e) {
+        console.log(e);
+        return res.status(400).json({
+          errors: ["Aluno não existe"],
+        });
+      }
     });
   }
 }
