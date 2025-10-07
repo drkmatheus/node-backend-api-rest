@@ -10,7 +10,7 @@ import picRoute from "./src/routes/picRoute";
 import { resolve } from "path";
 import cors from "cors";
 
-const whiteList = ["http://localhost:3000"];
+const whiteList = ["http://localhost:3000", "http://localhost:5173"];
 
 const corsOptions = {
   origin: function (origin, callback) {
