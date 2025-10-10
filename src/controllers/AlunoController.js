@@ -96,8 +96,9 @@ class AlunoController {
           errors: ["Aluno não encontrado"],
         });
       }
-      const novo = await Aluno.update(id);
-      return res.json(novo);
+      const novo = await aluno.update(req.body);
+      const { nome, sobrenome, email, idade, peso, altura } = novo;
+      return res.json({ nome, sobrenome, email, idade, peso, altura });
     } catch (e) {
       return res
         .status(400)
@@ -121,7 +122,7 @@ class AlunoController {
           errors: ["Aluno não encontrado"],
         });
       }
-      await aluno.destroy(id);
+      await aluno.destroy();
       return res.json(
         `Aluno ${aluno.nome} de ID ${aluno.id} apagado da base de dados`
       );
